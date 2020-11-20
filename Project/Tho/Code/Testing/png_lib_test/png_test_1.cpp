@@ -3,7 +3,7 @@
 #include <png.h>
 #include <iostream>
 #include <string.h>
-#include <bits/stdc++.h>
+// #include <bits/stdc++.h>
 
 int width, height;
 png_byte color_type;
@@ -134,9 +134,11 @@ void process_png_file()
 
 int main(){
   std::string s = "/media/tho/Storage/home/Github/Image_Processing_Project/Project/Tho/Code/Testing/Helloworld/science.png";
-  int n = s.length();
-  char char_array[n+1];
+  const int n = s.length();
+  char char_array[1000];
   strcpy(char_array, s.c_str());
   read_png_file(char_array);
-  std::cout << "Stop";
+  for (int i=1; i<10000; i++){
+  std::cout << "Stop"<< i;
+  }
 }
