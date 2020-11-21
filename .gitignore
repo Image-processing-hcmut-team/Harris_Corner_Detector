@@ -1,4 +1,3 @@
 .vscode/
-Project/Tho/include/
-Project/Tho/lib/
-vc140.pdb
+Project/Tho/Linux/include/
+Project/Tho/Linux/lib/
