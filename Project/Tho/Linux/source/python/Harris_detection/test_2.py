@@ -27,21 +27,19 @@ if __name__ == "__main__":
         feature_vecs_2[i, :] = img_2[local_max_2[i, 0]-3:local_max_2[i, 0]+4,
                                      local_max_2[i, 1]-3:local_max_2[i, 1]+4].flatten()
 
-    if feature_vecs_1.shape[0] > feature_vecs_2.shape[0]:
-        correspond_coord = np.zeros((feature_vecs_2.shape[0], 2), dtype=np.int)
-        correspond_dist = np.zeros(feature_vecs_2.shape[0], dtype=np.float)
-        for i in range(feature_vecs_2.shape[0]):
-            correspond_dist[i], coord = cKDTree(feature_vecs_1).query(feature_vecs_2[i, :], k=1)
-            # correspond_corner[i, :] = local_max_1[cKDTree(feature_vecs_1).query(feature_vecs_2[i, :], k=1)[1], :]
-            correspond_coord[i, :] = local_max_1[coord, :]
-        shortest_dist = correspond_dist.argsort()[:10]
-        translate_const = np.zeros(2, dtype=np.float)
-        for i in range(shortest_dist.shape[0]):
-            translate_const += local_max_2[shortest_dist[i], :] - correspond_coord[shortest_dist[i], :]
-        translate_const = np.round(translate_const/shortest_dist.shape[0] + 0.5).astype(np.int)
-        img_out = cv2.copyMakeBorder(img_2, 200, 200, 200, 200, cv2.BORDER_CONSTANT, value=0)
-        img_out[200+translate_const[0]:200+translate_const[0]+img_1.shape[0],
-                200+translate_const[1]:200+translate_const[1]+img_1.shape[1]] = img_1
-        cv2.imshow("Result", img_out)
-        cv2.waitKey(0)
-        print("Test")
+    correspond_coord = np.zeros((feature_vecs_2.shape[0], 2), dtype=np.int)
+    correspond_dist = np.zeros(feature_vecs_2.shape[0], dtype=np.float)
+    for i in range(feature_vecs_2.shape[0]):
+        correspond_dist[i], coord = cKDTree(feature_vecs_1).query(feature_vecs_2[i, :], k=1)
+        # correspond_corner[i, :] = local_max_1[cKDTree(feature_vecs_1).query(feature_vecs_2[i, :], k=1)[1], :]
+        correspond_coord[i, :] = local_max_1[coord, :]
+    shortest_dist = correspond_dist.argsort()[:10]
+    translate_const = np.zeros(2, dtype=np.float)
+    for i in range(shortest_dist.shape[0]):
+        translate_const += local_max_2[shortest_dist[i], :] - correspond_coord[shortest_dist[i], :]
+    translate_const = np.round(translate_const/shortest_dist.shape[0] + 0.5).astype(np.int)
+    img_out = cv2.copyMakeBorder(img_2, 200, 200, 200, 200, cv2.BORDER_CONSTANT, value=0)
+    img_out[200+translate_const[0]:200+translate_const[0]+img_1.shape[0],
+            200+translate_const[1]:200+translate_const[1]+img_1.shape[1]] = img_1
+    cv2.imshow("Result", img_out)
+    cv2.waitKey(0)

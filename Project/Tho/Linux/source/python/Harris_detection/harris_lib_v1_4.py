@@ -125,7 +125,7 @@ def corner_detection(img_origin, window_size, method, output_type, *args, **kwar
         raise ValueError("Wrong output type, try \"R_matrix\" or \"Dirrect_img\"")
 
 
-if __name__ == "__main__1":
+if __name__ == "__main__":
     img = cv2.imread("./Project/Tho/Linux/data/lena.jpg")
     R_values = corner_detection(img, window_size=(5, 5), method="Fast_Harris", output_type="R_matrix")
     cv2.namedWindow("Result")
@@ -141,7 +141,7 @@ if __name__ == "__main__1":
         if cv2.waitKey(100) & 0xff == 27:
             break
 
-if __name__ == "__main__":
+if __name__ == "__main__1":
     img = cv2.imread("./Project/Tho/Linux/data/lena.jpg")
     img_corner = corner_detection(img, window_size=(5, 5), method="Fast_Harris",
                                   output_type="Dirrect_img", response_min=0.5, min_distance=2)
