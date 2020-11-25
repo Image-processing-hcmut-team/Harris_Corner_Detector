@@ -100,8 +100,8 @@ def corner_detection(img_origin, window_size, method, output_type, *args, **kwar
 
 
 if __name__ == "__main__":
-    img = cv2.imread("./Project/Tho/Linux/data/lena.jpg")
-    R_values = corner_detection(img, window_size=(5, 5), method="Harris", output_type="R_matrix")
+    img = cv2.imread("./Project/Tho/Linux/data/car.png")
+    R_values = corner_detection(img, window_size=(5, 5), method="Shi-Tomasi", output_type="R_matrix")
     cv2.namedWindow("Result")
     cv2.createTrackbar("threshold", "Result", 2000, 6000, nothing)
     while True:

@@ -16,8 +16,8 @@ def corner_detection(img_origin, window_size, method, output_type, *args, **kwar
     window_size_halved = np.array(np.floor(window_size / 2), dtype=np.int)
 
     # Calculate Ix and Iy based on Sobel filter
-    img_dx = cv2.Sobel(img_gray, cv2.CV_64F, 1, 0, ksize=5)
-    img_dy = cv2.Sobel(img_gray, cv2.CV_64F, 0, 1, ksize=5)
+    img_dx = cv2.Sobel(img_gray, cv2.CV_32F, 1, 0, ksize=5)
+    img_dy = cv2.Sobel(img_gray, cv2.CV_32F, 0, 1, ksize=5)
 
     # Calculate (Ix)^2 integral
     img_dx_squared = np.square(img_dx)
@@ -99,7 +99,7 @@ def corner_detection(img_origin, window_size, method, output_type, *args, **kwar
                     img_dxy_integral[i - window_size_halved[0], j + window_size_halved[1] + 1] -\
                     img_dxy_integral[i + window_size_halved[0] + 1, j - window_size_halved[1]]
     if method == "Fast_Harris":
-        R_values = (np.multiply(M11_matrix, M22_matrix) - np.square(M12_matrix))-0.004*(M11_matrix+M22_matrix)
+        R_values = (np.multiply(M11_matrix, M22_matrix) - np.square(M12_matrix))-0.004*np.square(M11_matrix+M22_matrix)
     stop = time.time()
     print("Completed 100%")
     print("Total processing time: %0.2f" % (stop - start))
@@ -127,7 +127,7 @@ def corner_detection(img_origin, window_size, method, output_type, *args, **kwar
 
 if __name__ == "__main__1":
     img = cv2.imread("./Project/Tho/Linux/data/lena.jpg")
-    R_values = corner_detection(img, window_size=(5, 5), method="Shi-Tomasi", output_type="R_matrix")
+    R_values = corner_detection(img, window_size=(5, 5), method="Fast_Harris", output_type="R_matrix")
     cv2.namedWindow("Result")
     cv2.createTrackbar("threshold", "Result", 2000, 6000, nothing)
     while True:
