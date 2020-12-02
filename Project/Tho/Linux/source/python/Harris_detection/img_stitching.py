@@ -5,8 +5,8 @@ from skimage.feature import peak_local_max
 from harris_lib_v1_4 import corner_detection
 
 if __name__ == "__main__":
-    img_1 = cv2.imread("./Project/Tho/Linux/data/lena_1")
-    img_2 = cv2.imread("./Project/Tho/Linux/data/lena_2")
+    img_1 = cv2.imread("./Project/Tho/Linux/data/tdt_3.jpg")
+    img_2 = cv2.imread("./Project/Tho/Linux/data/tdt_4.jpg")
 
     R_values_1 = corner_detection(img_1, window_size=(5, 5), method="Harris", output_type="R_matrix")
     R_values_2 = corner_detection(img_2, window_size=(5, 5), method="Harris", output_type="R_matrix")
@@ -33,15 +33,16 @@ if __name__ == "__main__":
         correspond_dist[i], coord = cKDTree(feature_vecs_1).query(feature_vecs_2[i, :], k=1)
         # correspond_corner[i, :] = local_max_1[cKDTree(feature_vecs_1).query(feature_vecs_2[i, :], k=1)[1], :]
         correspond_coord[i, :] = local_max_1[coord, :]
-    shortest_dist = correspond_dist.argsort()[:10]
+    shortest_dist = correspond_dist.argsort()[:5]
     translate_const = np.zeros(2, dtype=np.float)
     for i in range(shortest_dist.shape[0]):
         translate_const += local_max_2[shortest_dist[i], :] - correspond_coord[shortest_dist[i], :]
     translate_const = np.round(translate_const/shortest_dist.shape[0] + 0.5).astype(np.int)
-    translate_max = abs(translate_const).max() + 100
+    translate_max = abs(translate_const).max()
+    # translate_max = 300
     img_out = cv2.copyMakeBorder(img_2, translate_max, translate_max,
                                  translate_max, translate_max, cv2.BORDER_CONSTANT, value=0)
     img_out[translate_max+translate_const[0]:translate_max+translate_const[0]+img_1.shape[0],
             translate_max+translate_const[1]:translate_max+translate_const[1]+img_1.shape[1]] = img_1
-    cv2.imshow("Result", img_out)
+    cv2.imshow("Stitching result", img_out)
     cv2.waitKey(0)
