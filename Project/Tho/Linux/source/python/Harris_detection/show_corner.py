@@ -9,8 +9,8 @@ def nothing(x):
 
 
 if __name__ == "__main__":
-    img_1 = cv2.imread("./Project/Tho/Linux/data/tue_1.jpg")
-    img_2 = cv2.imread("./Project/Tho/Linux/data/tue_2.jpg")
+    img_1 = cv2.imread("./Project/Tho/Linux/data/lena_1.jpeg")
+    img_2 = cv2.imread("./Project/Tho/Linux/data/lena_2.jpeg")
     R_values_1 = corner_detection(img_1, window_size=(5, 5), method="Harris", output_type="R_matrix")
     R_values_2 = corner_detection(img_2, window_size=(5, 5), method="Harris", output_type="R_matrix")
     cv2.namedWindow("Result 1")
